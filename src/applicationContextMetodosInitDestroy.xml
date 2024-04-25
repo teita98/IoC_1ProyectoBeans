@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+">
+
+	<!-- Cargamos el fichero para inyeccion de campo por fichero -->
+	<context:property-placeholder location="classpath:datosEmpresa.propiedades"></context:property-placeholder>
+	
+	<!-- Creacion de la dependencia -->
+	<bean id="miInforme" class="com.app.ioc.Informe"></bean>
+
+	<!-- Bean para inyeccion de dependencias con constructor -->
+	<!-- Reutilizacion de la dependencia con JefeEmpleado, podemos cambiarlo por DirectorEmpleado para imprimir el informe del Director -->
+	<bean id="miEmpleado" class="com.app.ioc.DirectorEmpleado"
+		  init-method="metodoInicial"
+		  destroy-method="metodoFinal"
+	>
+
+		<!-- Configuracion de la dependencia -->
+		<constructor-arg ref="miInforme"></constructor-arg>
+
+	</bean>
+</beans>
